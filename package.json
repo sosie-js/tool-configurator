@@ -1,0 +1,31 @@
+{
+  "name": "@editorjs/tool-configurator",
+  "version": "1.0.0",
+  "keywords": [
+    "sosie editor",
+    "tool-configurator",
+    "tool",
+    "editor.js",
+    "editorjs"
+  ],
+  "description": "Tool Configurator for Editor.js",
+  "license": "MIT",
+  "repository": "https://github.com/sosie-js/tool-configurator",
+  "main": "./dist/bundle.js",
+ "scripts": {
+    "build": "yarn install;node minify.js",
+    "lint": "eslint src/ --ext .js",
+    "lint:errors": "eslint src/ --ext .js --quiet",
+    "lint:fix": "eslint src/ --ext .js --fix",
+    "lint:init": "eslint src/ --ext .js --init"
+  },
+  "author": {
+    "name": "sosie",
+    "email": "sosie@sos-productions.com"
+  },
+  "dependencies": {
+    "@editorjs/editorjs": "^2.18.0",
+    "@node-minify/core": "^6.0.0",
+    "@node-minify/terser": "^6.0.0",
+  }
+}
