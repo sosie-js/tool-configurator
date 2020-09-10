@@ -26,7 +26,7 @@ which is a string of alowed tags separed by a comma, like in [EditorJS-php](http
  
 ## Integration
 
-Update SoS正 / editor.js core, sosie.js, just before new EditorJS.
+Update SoS正 / editor.js core, sosie.js, just before new SoSIE/EditorJS.
 
 For example,
 ```js
