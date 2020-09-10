@@ -26,7 +26,7 @@ which is a string of alowed tags separed by a comma, like in [EditorJS-php](http
  
 ## Integration
 
-you will have to add the Paragpraph plugin bundle loaded even if it is already include editorjs as core tool.
+1)you will have to add the Paragpraph plugin bundle loaded even if it is already include editorjs as core tool.
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/@editorjs/paragraph@latest"></script><!-- Paragraph -->
@@ -37,9 +37,9 @@ The reason of this is the class is cached and I did not succeed in overloading (
 like [@gohabereg](https://github.com/gohabereg) suggested with a typescript patch in [the issue I opened](https://github.com/codex-team/editor.js/issues/1280).
 
 
-Update SoS正 / editor.js core, sosie.js, just before new SoSIE/EditorJS.
+2)Update SoS正 / editor.js core, 
 
-For example,
+For example, in SoS正, we have since version 0.4.0, the new_SoSIE function for async stuff
 ```js
 
  /**
