@@ -6,11 +6,23 @@
 
 Provides an uniformized way to configure a Tool (in our case Paragraph) 
 
-The goal for us is to remove to setup sanitize and pasteConfig using allowedTag string to avoid style
-tags being washed. 
+In our case we will use it to setup sanitize and pasteConfig rules based on allowedTags declared like this in the
+config of Tool Paragraph
 
-It use allowedTags atrtribute which is a string of alowed tags separed by a comma, string
-stored along text within the config file of the Tool like in EditorJS-php.
+```js
+       /**
+        * NEW!: This tool has a common configuration for sanitizing and pasteConfig
+        */
+        paragraph: {
+          class: Paragraph,
+           text: {
+                type: "string",
+                allowedTags: "p,i,b,u,a[href],strong,em,br,dd,dt,dl,embed,div"
+            }
+        },
+```
+
+which is a string of alowed tags separed by a comma, like in [EditorJS-php](https://github.com/editor-js/editorjs-php/blob/master/tests/samples/test-config.json).
  
 ## Integration
 
@@ -73,6 +85,5 @@ yarn build
 
 ## Want to give a try?
 
-copy a  styled html text with bold (<strong>) oe other inline tags within a paragraph.
- Beware to select over the text to grasp the <p> container in your selection.
-and paste in [SoSie](http://sosie.sos-productions.com/)
+copy a  styled html text with bold (<strong/>) or other inline tags within a paragraph.
+ Beware to select over the text to grasp the <p> container in your selection and paste in [SoSie](http://sosie.sos-productions.com/)
