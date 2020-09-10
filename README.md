@@ -85,5 +85,5 @@ yarn build
 
 ## Want to give a try?
 
-copy a  styled html text with bold (<strong/>) or other inline tags within a paragraph.
- Beware to select over the text to grasp the <p> container in your selection and paste in [SoSie](http://sosie.sos-productions.com/)
+copy a  styled html text with bold "strong" or other inline tags within a paragraph.
+ Beware to select over the text to grasp the "p" container in your selection and paste in [SoSie](http://sosie.sos-productions.com/)
