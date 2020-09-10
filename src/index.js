@@ -1,6 +1,17 @@
  
-//Borrowed from https://blog.praveen.science/right-way-of-delaying-execution-synchronously-in-javascript-without-using-loops-or-timeouts/
 
+/**
+    * Tool configurator
+    *
+    * @Note this has to be triggered before editor - Editor.js instance creation 
+    * @author sos-productions.com
+    * @version 1.0
+    * @history
+    *    1.0 (10.09.2020) - Initial version f
+    **/
+
+
+//Borrowed from https://blog.praveen.science/right-way-of-delaying-execution-synchronously-in-javascript-without-using-loops-or-timeouts/
 function delay(n) {
     n = n || 2000;
     return new Promise(done => setTimeout(() => done(), n));
@@ -18,37 +29,43 @@ function whenAvailable(name, callback, config) {
             window.clearInterval(intervalId);
 
             // Call back
+            console.info('Started');
             callback(window[name],name,config);
-            
             window.ConfigFinished=true;
-            
+            console.info('Finished');
         }
-    }, 100);
+    }, 10);
     
 } 
 
-async function waitFinished(name,n,func) {
+async function waitFinished(name,n,func,context) {
         n = n || 2000;
         var intervalId = window.setInterval(function() {
         window.clearInterval(intervalId);
         console.error('Timeout for '+name+ 'Tool configuration');
             n=0;
     }, n);
-    func(name);
+    console.log('wait start with '+func+'('+name+') n '+n);
+    context[func](name);
+    console.log('wait end'+window.ConfigFinished+' '+n);
     while((!window.ConfigFinished)&&n) {
             await delay(10);
     }
+    window.clearInterval(intervalId);
     if(n) console.info(name+ 'Tool configuration success');
 }
         
-async function awaitFinished(name,n,func) {  
+async function awaitFinished(name,n,func,context) {  
     n = n || 2000;
     let prom= async function(resolve, reject) {
         var intervalId = window.setInterval(function() {
             window.clearInterval(intervalId);
+            n=0;
             reject(new Error('Timeout for '+name+ ' Tool configuration'));
         }, n);
-        func(name);
+        console.log('await start with '+func+'('+name+') n '+n);
+        context[func](name);
+        console.log('await end'+window.ConfigFinished+' '+n);
         while((!window.ConfigFinished)&&n) {
             await delay(10);
         }
@@ -63,7 +80,7 @@ checkConfigFinished=function(tool) {
     if(window.ConfigFinished) {
         alert('Config read:'+Paragraph.pasteConfig.toSource()+'\n'+Paragraph.sanitize.toSource());
     }else {
-        alert('ConfigFinished:'+ window.ConfigFinished);
+        alert('Config finished:'+ window.ConfigFinished);
     }
 }
 
@@ -71,8 +88,12 @@ checkConfigFinished=function(tool) {
 
 class ToolConfigurator {   
            
-        constructor() {
-            this.version = '1.0';
+        constructor(config) {
+            this.config = config;
+        }
+    
+        getToolConfig(tool) {
+            return this.config.tools[tool.toLowerCase()];
         }
     
 	/**
@@ -83,12 +104,12 @@ class ToolConfigurator {
 	*  allowedTags string stored in config.text.allowedTags
 	*  for by "p,i,b,u,a[href],strong,em,br,dt,dl,embed,ol,li,ul,div"
 	*/
-        static helper(Tool,name,config) {
+        helper(Tool,name,config) {
             
             //Now let's converts it to html-janitor's rules format 
             //@see https://editorjs.io/sanitizer#sanitizer-rules-configuration
             
-            if(config.text.hasOwnProperty('allowedTags')) {
+            if(config.hasOwnProperty('text')&&config.text.hasOwnProperty('allowedTags')) {
             
                 let allowedTags=config.text.allowedTags.split(',');
                 
@@ -149,21 +170,24 @@ class ToolConfigurator {
                 
                 console.info('New PasteConfig rules for tool '+name,Tool.pasteConfig);/*[ 'P', 'BR', 'STRONG' ]*/ 
            }else {
-                console.info('Nothing to configure for Tool '+name,Tool.pasteConfig);
+                console.warn('Nothing to configure for Tool '+name,Tool.pasteConfig);
            }
            
         }
      
-        static configure(tool) {
-            let toolsConfig=getTools();
-            let config=toolsConfig[tool.toLowerCase()];
-            let helper=ToolConfigurator.helper
+        configure(tool) {
+            let config=this.getToolConfig(tool);
+            let helper=this.helper;
+            console.log('configure '+tool);
             if(config) whenAvailable(tool, helper, config);
         }
         
-	static awaitFinished(name,n) {
-                let func=this.configure;
-		return awaitFinished(name, n, func)
+	awaitFinished(name,n) {
+		return awaitFinished(name, n, 'configure', this)
+	}
+	
+	waitFinished(name,n) {
+		return waitFinished(name, n, 'configure', this)
 	}
 }
         

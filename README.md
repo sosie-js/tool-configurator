@@ -16,10 +16,52 @@ stored along text within the config file of the Tool like in EditorJS-php.
 
 Update SoS正 / editor.js core, sosie.js, just before new EditorJS.
 
+For example,
+```js
+
+ /**
+     * configure the Editor Tools before the Editor being initialized
+     * @note Hack because for now we cannot have async constructors
+     * @param {EditorConfig|string|undefined} [configuration] - user configuration
+     * @param {boolean] custom , if not specified use demo by default.
+     * @return promise<EditorJS>
+     */
+    async function new_SoSIE(configuration,custom) {
+    
+       /**
+        * Saving button
+        */
+        const saveButton = document.getElementById('saveButton');
+    
+        let ct=new ToolConfigurator(configuration);
+        
+        //This will avoid to hardcode sanitize rules in Paragraph tool.
+        //and use our rules defined in paragraph.text.allowedTags
+        //to avoid washing style tags deliberately by default (p tag is mandatory!)
+        await ct.awaitFinished('Paragraph',500);
+        
+        //checkConfigFinished('Paragraph');
+        var editor=new SoSIE(configuration,custom);
+         
+        /**
+        * Saving example
+        */
+        saveButton.addEventListener('click', function () {
+            editor.save().then((savedData) => {
+                cPreview.show(savedData, document.getElementById("output"));
+            });
+        });
+         
+        return editor;
+    }
+```
+
+I have inserted a line
 ```js
 await ToolConfigurator.awaitFinished(toolName,timeout)
 ```
-where toolName is 'Paragraph' and timeout is the watchdog time in ms - I choosed 300.
+where toolName is 'Paragraph' and timeout is the watchdog time in ms - I choosed 500ms.
+
 
 ## Building the plugin
 

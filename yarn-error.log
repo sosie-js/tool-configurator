@@ -1,0 +1,61 @@
+Arguments: 
+  /usr/bin/node /usr/share/yarn/bin/yarn.js minify
+
+PATH: 
+  /usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/local/sbin:/usr/sbin:/sbin
+
+Yarn version: 
+  1.22.5
+
+Node version: 
+  12.18.3
+
+Platform: 
+  linux x64
+
+Trace: 
+  SyntaxError: /var/www/sos-productions/sosie.sos-productions.com/tool-configurator/package.json: Unexpected token } in JSON at position 801
+      at JSON.parse (<anonymous>)
+      at /usr/share/yarn/lib/cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (/usr/share/yarn/lib/cli.js:310:30)
+      at /usr/share/yarn/lib/cli.js:321:13
+
+npm manifest: 
+  {
+    "name": "@editorjs/tool-configurator",
+    "version": "1.0.0",
+    "keywords": [
+      "sosie editor",
+      "tool-configurator",
+      "tool",
+      "editor.js",
+      "editorjs"
+    ],
+    "description": "Tool Configurator for Editor.js",
+    "license": "MIT",
+    "repository": "https://github.com/sosie-js/tool-configurator",
+    "main": "./dist/bundle.js",
+   "scripts": {
+      "build": "yarn install;node minify.js",
+      "lint": "eslint src/ --ext .js",
+      "lint:errors": "eslint src/ --ext .js --quiet",
+      "lint:fix": "eslint src/ --ext .js --fix",
+      "lint:init": "eslint src/ --ext .js --init"
+    },
+    "author": {
+      "name": "sosie",
+      "email": "sosie@sos-productions.com"
+    },
+    "dependencies": {
+      "@editorjs/editorjs": "^2.18.0",
+      "@node-minify/core": "^6.0.0",
+      "@node-minify/terser": "^6.0.0",
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
