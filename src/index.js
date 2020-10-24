@@ -1,14 +1,19 @@
  
+/*!
+  * Tool configurator
+  *
+  *  @version 1.0.0
+  *  @package https://github.com/sosie-js/tool-configurator
+  * 
+  */
 
-/**
-    * Tool configurator
-    *
-    * @Note this has to be triggered before editor - Editor.js instance creation 
-    * @author sos-productions.com
-    * @version 1.0
-    * @history
-    *    1.0 (10.09.2020) - Initial version f
-    **/
+  /**
+  * @Note this has to be triggered before editor - Editor.js instance creation 
+  * @author sos-productions.com
+  *
+  * @history
+  *    1.0.0 (10.09.2020) - Initial version 
+  **/
 
 
 //Borrowed from https://blog.praveen.science/right-way-of-delaying-execution-synchronously-in-javascript-without-using-loops-or-timeouts/
